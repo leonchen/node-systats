@@ -19,6 +19,10 @@ class Client
       method: 'POST'
       qs:
         load: os.loadavg()
+        memory:
+          process: process.memoryUsage()
+          total: os.totalmem()
+          free: os.freemem()
         sockets:
           sys: lsof.getSysCount()
           process: lsof.getCountByPID(process.pid)
