@@ -1,0 +1,10 @@
+{
+  "name": "node-systats",
+  "description": "system mornitoring for cpu/mem/socks usages",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.3.1",
+    "redis": "0.8.2",
+    "jade": "0.32.0"
+  }
+}

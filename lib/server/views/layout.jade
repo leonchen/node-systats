@@ -3,5 +3,13 @@ html
   head
     title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/chart.css')
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/jquery.flot.min.js')
+    script(src='/javascripts/jquery.flot.time.min.js')
+    script(src='/javascripts/livechart.js')
+
+    block extScripts
+
   body
     block content

@@ -28,17 +28,18 @@ class LSOF
     @run()
 
   run: ->
+    t= Date.now()
     exec 'lsof -i', (err, stdout, stderr) =>
-      @result = {'sys': -1}
+      @result = {'sys': [t, -1]}
       for line in stdout.split(/[\r\n]+/)
-        @result['sys'] += 1
+        @result['sys'][1] += 1
         row = line.split(/\s+/)
         for f, vals of @commands
           @result[f] ?= {}
           idx = FIELDS[f]
           for val of vals
-            @result[f][val] ?= 0
-            @result[f][val] += 1 if val == row[idx]
+            @result[f][val] ?= [t, 0]
+            @result[f][val][1] += 1 if val == row[idx]
 
     setTimeout =>
       @run()

@@ -1,0 +1,25 @@
+extend layout
+
+
+block content
+  h2.line Load
+  .row-fluid
+    #load.span12.h150
+
+  h2.line CPU
+  .row-fluid
+    #cpuavg.span12.h150
+  #cpus
+
+  h2.line
+    | MEM - 
+    span#totalmem
+  .row-fluid
+    #memUsage.span12.h150
+
+  h2.line Socks
+  .row-fluid
+    #socks.span12.h150
+  
+
+  script(src='/javascripts/machine.js')

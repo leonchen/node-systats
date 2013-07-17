@@ -1,0 +1,33 @@
+.h150{
+  height: 150px;
+}
+.h100{
+  height: 100px;
+}
+.h200{
+  height: 200px;
+}
+
+.w400{
+  width: 400px;
+}
+.w100{
+  width: 100px;
+}
+.w150{
+  width: 150px;
+}
+
+.floatLeft{
+  float: left;
+}
+.line{
+  clear: both;
+}
+.greenbg{
+  background-color: #00ff00;
+}
+.f30{
+  font-size: 30px;
+  font-weight: bold;
+}
