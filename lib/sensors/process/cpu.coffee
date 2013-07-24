@@ -1,0 +1,19 @@
+Base = require "../base"
+usage = require 'usage'
+
+class CPU extends Base
+  constructor: (config) ->
+    super(config)
+
+    @pid = config.pid
+    @usage = null
+
+  getData: ->
+    usage.lookup @pid, (err, res) =>
+      @usage = if err then null else res.cpu
+
+  result: ->
+    return [Date.now(),  @usage]
+     
+
+module.exports = CPU

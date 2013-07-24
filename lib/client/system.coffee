@@ -6,7 +6,7 @@ class System
     @_cpuUsage = {}
     @_load = {}
     @_totalmem = os.totalmem()
-    @_memUsage = null 
+    @_memUsage = null
     @started = false
 
   run: ->

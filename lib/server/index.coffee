@@ -2,6 +2,9 @@ express = require 'express'
 http = require 'http'
 path = require 'path'
 
+redis = require("redis").createClient()
+
+routes = require 'routes'
 $data = {}
 
 class Server
@@ -22,6 +25,10 @@ class Server
       $data = req.body
       res.send 200
 
+    redis.on "message", (channel, message) =>
+      $data = JSON.parse message
+    redis.subscribe "client.data"
+
     app.get '/', (req, res) =>
       res.render 'index', {data: $data}
 
@@ -32,6 +39,7 @@ class Server
     app.get '/machine', (req, res) =>
       res.render 'machine', {data: $data}
 
+    routes.setup app
 
     http.createServer(app).listen 2470
 

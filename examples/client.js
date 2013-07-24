@@ -1,9 +1,12 @@
-var express = require('express');
-var app = express();
-
 var Client = new require("../lib").Client;
-
-var options = {};
+var options = {
+  processes:{
+    postgres: {
+      interval: 1000
+    },
+    firefox: {
+      interval: 2000
+    }
+  }
+};
 var c = new Client(options);
-
-app.listen(3030);

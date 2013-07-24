@@ -2,12 +2,16 @@ server = "http://127.0.0.1:2470"
 commitPath = "/commit"
 request = require 'request'
 system = require "./system"
-lsof = require './lsof'
+lsof = require '../lsof'
+
+redis = require("redis").createClient()
 
 system.run()
 lsof.countPID(process.pid)
 lsof.countCommand('postgres')
-lsof.run()
+lsof.start()
+
+
 
 class Client
   constructor: (options) ->
@@ -27,15 +31,12 @@ class Client
         sys: lsof.getSysCount()
         process: lsof.getCountByPID(process.pid)
         postgres: lsof.getCountByCommand('postgres')
-    options =
-      uri: server + commitPath
-      method: 'POST'
       json: data
 
-    request options, (e, r, body) =>
-      setTimeout =>
-        @commit()
-      , 2000
+    redis.publish "client.data", JSON.stringify(data)
+    setTimeout =>
+      @commit()
+    , 2000
 
   getStatus: ->
     return os.loadavg()
