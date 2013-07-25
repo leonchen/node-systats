@@ -1,15 +1,17 @@
 Base = require "./base"
-lsof = require "../lsof"
+exec = require('child_process').exec
 
 class Socket extends Base
   constructor: (config) ->
     super(config)
 
-    lsof.start()
+    @sockets = null
 
   getData: ->
+    exec "lsof |wc -l", (err, stdout, stderr) =>
+      @sockets = if err then null else parseInt(stdout)
 
   result: ->
-    return lsof.getSysCount()
+    total: [Date.now(), @sockets]
 
 module.exports = Socket

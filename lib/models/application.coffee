@@ -32,6 +32,17 @@ class Application
 
       cb()
 
+  status: ->
+    t = Date.now()
+    result = {}
+    for pid, p of @processes
+      r = p.status()
+      for sensor, data of r
+        result[sensor] ?= [t, 0]
+        result[sensor][1] += r[1] if r[1]
+      #result[pid] = p.status()
+    return result
+
   start: ->
     return if @started
     @started = true

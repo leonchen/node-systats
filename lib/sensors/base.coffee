@@ -18,7 +18,7 @@ class Base
   getData: ->
 
   result: ->
-    return null
+    return [Date.now(), null]
 
   stop: ->
     return unless @started
@@ -26,3 +26,5 @@ class Base
       clearTimeout @timeoutId
       @timeoutId = null
     @started = false
+
+module.exports = Base

@@ -1,4 +1,5 @@
 Base = require './base'
+os = require 'os'
 
 class Memory extends Base
   constructor: (config) ->
@@ -12,6 +13,7 @@ class Memory extends Base
     @_memUsage = [t, (@_totalmem - os.freemem())*100/@_totalmem]
 
   result: ->
-    return @_memUsage
+    total: @_totalmem,
+    usage: @_memUsage
 
 module.exports = Memory

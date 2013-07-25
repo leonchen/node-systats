@@ -1,4 +1,5 @@
 Base = require './base'
+os = require 'os'
 
 class Load extends Base
   constructor: (config) ->

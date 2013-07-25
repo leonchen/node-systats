@@ -1,4 +1,4 @@
-Sensors = require '../sensors'
+Sensors = require('../sensors').process
 
 class Process
   constructor: (pid, sensors) ->
@@ -12,11 +12,16 @@ class Process
   initSensor: (name, config) ->
     if Sensors[name]
       config.pid = @pid
-      sensor = new Sensors.process[name](config)
+      sensor = new Sensors[name](config)
       @sensors[name] = sensor
     else
       throw "unknown sensor: "+name
 
+  status: ->
+    result = {}
+    for name, sensor of @sensors
+      result[name] = sensor.result()
+    return result
 
   start: ->
     return if @started

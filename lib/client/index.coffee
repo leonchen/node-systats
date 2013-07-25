@@ -1,45 +1,62 @@
-server = "http://127.0.0.1:2470"
-commitPath = "/commit"
-request = require 'request'
-system = require "./system"
-lsof = require '../lsof'
-
+Machine = require '../models/machine'
 redis = require("redis").createClient()
-
-system.run()
-lsof.countPID(process.pid)
-lsof.countCommand('postgres')
-lsof.start()
-
-
 
 class Client
   constructor: (options) ->
-    @commit()
+    @started = false
+    @timeoutId = null
+    @machine = null
+    @loadMachine(options)
+
+  loadMachine: (config) ->
+    @machine = new Machine
+      apps:
+        redis:
+          sensors:
+            cpu:
+              interval: 1000
+            memory:
+              interval: 1000
+            socket:
+              interval: 1000
+        node:
+          sensors:
+            cpu:
+              interval: 1000
+            memory:
+              interval: 1000
+            socket:
+              interval: 1000
+
+
+
 
   commit: ->
+    result = {}
     now = Date.now()
-    data =
-      os:
-        load: system.load()
-        cpu: system.cpuUsage()
-        memory:
-          process: [now, process.memoryUsage()]
-          usage: system.memUsage()
-          total: system.totalmem()
-      socks:
-        sys: lsof.getSysCount()
-        process: lsof.getCountByPID(process.pid)
-        postgres: lsof.getCountByCommand('postgres')
-      json: data
+    data = @machine.status()
+    console.log(data)
+    result[@machine.name] = [now, @machine.status()]
 
-    redis.publish "client.data", JSON.stringify(data)
-    setTimeout =>
+    redis.publish "client.data", JSON.stringify result
+
+    @timeoutId = setTimeout =>
       @commit()
     , 2000
 
-  getStatus: ->
-    return os.loadavg()
+  start: ->
+    return if @started
+    @started = true
+    @machine.start()
+    @commit()
+
+  stop: ->
+    return unless @started
+    if @timeoutId
+      clearTimeout @timeoutId
+      @timeoutId = null
+    @machine.stop()
+    @started = false
 
   
 

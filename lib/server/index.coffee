@@ -4,7 +4,7 @@ path = require 'path'
 
 redis = require("redis").createClient()
 
-routes = require 'routes'
+routes = require './routes'
 $data = {}
 
 class Server
@@ -32,12 +32,13 @@ class Server
     app.get '/', (req, res) =>
       res.render 'index', {data: $data}
 
-    app.get '/usage', (req, res) =>
+    app.get '/status/:machineId', (req, res) =>
       res.set "Access-Control-Allow-Origin", "*"
-      res.json $data
+      res.json $data[req.params.machineId][1]
 
-    app.get '/machine', (req, res) =>
-      res.render 'machine', {data: $data}
+    app.get '/machine/:machineId', (req, res) =>
+      m = req.params.machineId
+      res.render 'machine', {machine:m}
 
     routes.setup app
 

@@ -16,6 +16,6 @@ module.exports.getIP = ->
   ifaces = require('os').networkInterfaces()
   for dev, iface of ifaces
     for alias in iface
-      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal)
+      if (alias.family is 'IPv4' && alias.address isnt '127.0.0.1' && !alias.internal)
         return alias.address
   return 'noExternalIPv4'
