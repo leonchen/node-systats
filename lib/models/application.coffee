@@ -19,8 +19,8 @@ class Application
       pids = stdout.toString().split(/\s+/)
       running = {}
       for pid in pids
-        unless @processes[pid]
-          p = new Process(pid, @sensors)
+        if pid && !@processes[pid]
+          p = new Process(parseInt(pid), @sensors)
           @processes[pid] = p
           p.start()
         running[pid] = true
@@ -39,7 +39,7 @@ class Application
       r = p.status()
       for sensor, data of r
         result[sensor] ?= [t, 0]
-        result[sensor][1] += r[1] if r[1]
+        result[sensor][1] += data[1] if data[1]
       #result[pid] = p.status()
     return result
 

@@ -12,22 +12,23 @@ class Machine
 
 
     @loadApps(config.apps)
-    @loadSensors()
+    @loadSensors(config.system) if config.system
 
   loadApps: (apps) ->
     for app, config of (apps || {})
       @apps[app] = new Application(app, config)
 
-  loadSensors: ->
+  loadSensors: (sensors) ->
     config =
       interval: 2000
     for name, sensor of systemSensors
-      @sensors[name] = new sensor(config)
+      @sensors[name] = new sensor(config) if sensors[name]
 
   status: ->
-    result = {}
+    result =
+      apps: {}
     for name, app of @apps
-      result[name] = app.status()
+      result.apps[name] = app.status()
     for n, sensor of @sensors
       result[n] = sensor.result()
     return result

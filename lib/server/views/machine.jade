@@ -8,8 +8,7 @@ block content
 
   h2.line CPU
   .row-fluid
-    #cpuavg.span12.h150
-  #cpus
+    #cpus.span12.h300
 
   h2.line
     | MEM - 
@@ -17,12 +16,26 @@ block content
   .row-fluid
     #memUsage.span12.h150
 
-  h2.line Socks
+  h2.line Sockets
   .row-fluid
-    #socks.span12.h150
+    #sockets.span12.h150
+
+  h2.line Apps
+  #apps
+
   
+  script#appTemplate(type="text/x-jquery-tmpl")
+    .app
+      h4.appName
+      .row-fluid
+        .cpu.span12.h100
+        .mem.span12.h100
+        .socket.span12.h100
+    
+    
 
   script.
     var machine = "#{machine}";
 
+  script(src='/javascripts/charts.js')
   script(src='/javascripts/machine.js')

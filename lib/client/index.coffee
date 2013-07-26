@@ -5,37 +5,12 @@ class Client
   constructor: (options) ->
     @started = false
     @timeoutId = null
-    @machine = null
-    @loadMachine(options)
-
-  loadMachine: (config) ->
-    @machine = new Machine
-      apps:
-        redis:
-          sensors:
-            cpu:
-              interval: 1000
-            memory:
-              interval: 1000
-            socket:
-              interval: 1000
-        node:
-          sensors:
-            cpu:
-              interval: 1000
-            memory:
-              interval: 1000
-            socket:
-              interval: 1000
-
-
-
+    @machine = new Machine(options)
 
   commit: ->
     result = {}
     now = Date.now()
-    data = @machine.status()
-    console.log(data)
+    #data = @machine.status()
     result[@machine.name] = [now, @machine.status()]
 
     redis.publish "client.data", JSON.stringify result

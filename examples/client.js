@@ -27,7 +27,13 @@ var options = {
                                      }
                            }
                 }
-        }
+        },
+  system: {
+            cpu: true,
+            load: true,
+            memory: true,
+            socket: true
+          }
 };
 var c = new Client(options);
 c.start();
