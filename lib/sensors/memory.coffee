@@ -8,9 +8,10 @@ class Memory extends Base
     @_totalmem = os.totalmem()
     @_memUsage = null
 
-  getData: ->
+  getData: (cb) ->
     t = Date.now()
     @_memUsage = [t, (@_totalmem - os.freemem())*100/@_totalmem]
+    cb()
 
   result: ->
     total: @_totalmem,

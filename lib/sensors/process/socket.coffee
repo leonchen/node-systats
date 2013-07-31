@@ -8,9 +8,10 @@ class Socket extends Base
     @pid = config.pid
     @sockets = null
 
-  getData: ->
+  getData: (cb) ->
     exec "ls -l /proc/#{@pid}/fd |wc -l", (err, stdout, stderr) =>
       @sockets = if err then null else parseInt(stdout)
+      cb()
 
 
   result: ->

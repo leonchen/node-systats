@@ -8,9 +8,10 @@ class Memory extends Base
     @pid = config.pid
     @usage = null
 
-  getData: ->
+  getData: (cb) ->
     usage.lookup @pid, (err, res) =>
       @usage = if err then null else res.memory
+      cb()
 
   result: ->
     return [Date.now(), @usage]

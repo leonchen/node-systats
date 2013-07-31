@@ -8,7 +8,7 @@ class CPU extends Base
     @cpus = os.cpus()
     @_cpuUsage = {}
 
-  getData: ->
+  getData: (cb) ->
     t = Date.now()
     cpus = os.cpus()
     usage = 0
@@ -23,6 +23,7 @@ class CPU extends Base
 
     @_cpuUsage.avg = [t, usage/cpus.length]
     @cpus = cpus
+    cb()
 
   result: ->
     return @_cpuUsage

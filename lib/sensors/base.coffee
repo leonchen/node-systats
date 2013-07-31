@@ -10,12 +10,13 @@ class Base
     @run()
 
   run: ->
-    @getData()
-    @timeoutId = setTimeout =>
-      @run()
-    , @interval
+    @getData =>
+      @timeoutId = setTimeout =>
+        @run()
+      , @interval
 
-  getData: ->
+  getData: (cb)->
+    cb()
 
   result: ->
     return [Date.now(), null]
