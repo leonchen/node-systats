@@ -25,9 +25,9 @@ class Application
           p.start()
         running[pid] = true
 
-      for pid in @processes
+      for pid, p of @processes
         unless running[pid]
-          @processes[pid].stop()
+          p.stop()
           delete @processes[pid]
 
       cb()
