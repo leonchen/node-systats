@@ -27,7 +27,7 @@ class Server
 
     redis.on "message", (channel, message) =>
       data = JSON.parse message
-      machine = Object.keys[data][0]
+      machine = Object.keys(data)[0]
       $data[machine] = data[machine]
     redis.subscribe "client.data"
 
