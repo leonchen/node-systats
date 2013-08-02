@@ -9,7 +9,7 @@ class CPU extends Base
     @usage = null
 
   getData: (cb) ->
-    usage.lookup @pid, (err, res) =>
+    usage.lookup @pid, { keepHistory: true }, (err, res) =>
       @usage = if err then null else res.cpu
       cb()
 
