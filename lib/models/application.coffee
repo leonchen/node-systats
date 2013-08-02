@@ -1,6 +1,7 @@
 exec = require('child_process').exec
 
 Process = require './process'
+EXISTING_PERIOD = 2
 
 class Application
   constructor: (name, config) ->
@@ -9,6 +10,7 @@ class Application
     @started = false
 
     @processes = {}
+    @processesCache = {}
     @checkInterval = config.checkInterval || 5000
     @checkTimeoutId = null
 
@@ -19,11 +21,18 @@ class Application
       pids = stdout.toString().split(/\s+/)
       running = {}
       for pid in pids
-        if pid && !@processes[pid]
+        if pid && @processesCache[pid] > EXISTING_PERIOD && !@processes[pid]
           p = new Process(parseInt(pid), @sensors)
           @processes[pid] = p
           p.start()
         running[pid] = true
+        @processesCache[pid] ?= 1
+
+      for pid, count of @processesCache
+        if running[pid]
+          @processesCache[pid] += 1
+        else
+          delete @processesCache[pid]
 
       for pid, p of @processes
         unless running[pid]
@@ -38,9 +47,10 @@ class Application
     for pid, p of @processes
       r = p.status()
       for sensor, data of r
-        result[sensor] ?= [t, 0]
-        result[sensor][1] += data[1] if data[1]
-      #result[pid] = p.status()
+        result[sensor] ?=
+          total: [t, 0]
+        result[sensor].total[1] += data[1] if data[1]
+        result[sensor][pid] = data
     return result
 
   start: ->

@@ -6,6 +6,7 @@ class Client
     @started = false
     @timeoutId = null
     @machine = new Machine(options)
+    console.log "collecting ", @machine.name
 
   commit: ->
     result = {}

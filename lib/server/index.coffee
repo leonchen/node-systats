@@ -34,7 +34,10 @@ class Server
 
     app.get '/status/:machineId', (req, res) =>
       res.set "Access-Control-Allow-Origin", "*"
-      res.json $data[req.params.machineId][1]
+      if $data[req.params.machineId]
+        res.json $data[req.params.machineId][1] 
+      else
+        res.json {}
 
     app.get '/machine/:machineId', (req, res) =>
       m = req.params.machineId
