@@ -26,7 +26,9 @@ class Server
       res.send 200
 
     redis.on "message", (channel, message) =>
-      $data = JSON.parse message
+      data = JSON.parse message
+      machine = Object.keys[data][0]
+      $data[machine] = data[machine]
     redis.subscribe "client.data"
 
     app.get '/', (req, res) =>
