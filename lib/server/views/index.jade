@@ -1,4 +1,7 @@
 extends layout
 
 block content
-  p #{JSON.stringify(data)}
+  ul.machines
+    each d, m in machines
+      li
+        a(href="/machine/#{m}")= m

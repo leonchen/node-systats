@@ -30,7 +30,7 @@ class Server
     redis.subscribe "client.data"
 
     app.get '/', (req, res) =>
-      res.render 'index', {data: $data}
+      res.render 'index', {machines: $data}
 
     app.get '/status/:machineId', (req, res) =>
       res.set "Access-Control-Allow-Origin", "*"
