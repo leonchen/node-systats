@@ -4,26 +4,26 @@ var options = {
           redis: {
                    sensors: {
                               cpu: {
-                                     interval: 1000
+                                     interval: 5000
                                    },
                               memory: {
-                                        interval: 1000
+                                        interval: 5000
                                       },
                               socket: {
-                                        interval: 1000
+                                        interval: 5000
                                       }
                             }
                  }, 
           node: {
                   sensors: {
                              cpu: {
-                                    interval: 1000
+                                    interval: 5000
                                   },
                              memory: {
-                                       interval: 1000
+                                       interval: 5000
                                      },
                              socket: {
-                                       interval: 1000
+                                       interval: 5000
                                      }
                            }
                 }
