@@ -5,7 +5,8 @@
   "dependencies": {
     "express": "3.3.1",
     "redis": "0.8.2",
-    "usage": "0.3.7",
+    "usage": "0.3.8",
+    "coffee-script": "*",
     "jade": "0.32.0"
   }
 }

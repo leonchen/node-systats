@@ -8,11 +8,10 @@ class Memory extends Base
 
     @pid = config.pid
     @usage = null
-    @multiplier = if os.platform() is 'darwin' then 1024 else 1
 
   getData: (cb) ->
     usage.lookup @pid, (err, res) =>
-      @usage = if err then null else res.memory*@multiplier
+      @usage = if err then null else res.memory
       cb()
 
   result: ->
